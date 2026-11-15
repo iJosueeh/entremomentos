@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 
-const output = new URL('../dist/', import.meta.url);
+const output = new URL('../dist/public/', import.meta.url);
 const demo = await readFile(new URL('demo/index.html', output), 'utf8');
 const landing = await readFile(new URL('index.html', output), 'utf8');
 const demoMain = demo.match(/<main\b[^>]*\bid="contenido"[^>]*>/)?.[0];

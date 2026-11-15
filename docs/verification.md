@@ -1,3 +1,14 @@
+# Perfiles público y personal — 2026-11-15
+
+`npm run verify` aprobado (código 0): Astro check, ESLint, Prettier, Vitest y ambos builds con gates. Registro local: `/tmp/entremomentos-profiles-verify.log`. El formato de la tabla de `qa/rc1.md` ya fallaba en Prettier; se normalizó sin cambiar su contenido para completar el gate global.
+
+- Público: 2 páginas (`/` y `/demo`), 26 archivos; exclusión de datos/estilos personales y laboratorio aprobada en todos los artefactos.
+- Personal: 1 página (`/para/danna/`), 10 archivos; seis escenas SSR, firma, hidratación y recursos previstos; sin landing, demo ni sus fotografías.
+- Pruebas nuevas: ruta personal obligatoria, rechazo de rutas públicas infiltradas, medios/chunks sobrantes y datos personales ocultos en un chunk público.
+- Autocomprobación del runner: tres combinaciones inválidas de perfil abortan antes de compilar. Comparación con Git: las páginas trasladadas conservan sus bytes; documento Danna, Story V2, estilos y animaciones no tienen cambios.
+
+La configuración del hosting y las pruebas HTTP de autenticación **no se ejecutaron**. No se ha desplegado, creado commits ni hecho push. No se declara aceptación visual ni de interacción nueva; RC1 conserva sus pendientes. La publicación personal requiere primero probar All Deployments sobre un despliegue inocuo. Véanse [guía operativa con variables, comandos, planes y Cloudflare Access](deployment-profiles.md) y [ADR 012](decisions/012-build-profiles.md).
+
 # RC1 — 2026-11-15
 
 Ver [informe RC1 y matriz manual](qa/rc1.md). Instalación y árbol aprobados; QA visual, HTTP e hidratación real bloqueados. Veredicto: **NO-GO** hasta ejecutar la matriz de navegador. Los registros siguientes son históricos y no sustituyen RC1.

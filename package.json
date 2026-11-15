@@ -8,14 +8,17 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
+    "build": "npm run build:public",
+    "preview": "astro preview --outDir dist/public",
     "check": "astro check",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
-    "verify": "npm run check && npm run lint && npm run format:check && npm test && npm run build && node scripts/check-story-build.mjs"
+    "verify": "npm run check && npm run lint && npm run format:check && npm test && npm run build:public && npm run build:personal",
+    "build:public": "node scripts/build-profile.mjs public && node scripts/check-story-build.mjs",
+    "build:personal": "node scripts/build-profile.mjs personal",
+    "preview:personal": "BUILD_PROFILE=personal astro preview --outDir dist/personal --host 127.0.0.1"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.9",

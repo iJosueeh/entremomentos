@@ -76,3 +76,7 @@ La misma feature incorpora Polaroid reutilizable, StoryActs y un proxy decorativ
 ## Dedicatoria local v1
 
 `features/story-player/local/danna.astro` compone la API pública del mismo renderer y valida su documento independiente. Se inyecta como `/para/danna/` únicamente con `command === 'dev'`; queda fuera de `pages`, de `public` y de las entradas públicas del player. Sus estilos de previsualización acotan el scroll interno de la carta larga y reservan espacio tras la mejora cliente sin cambiar la demo ni GSAP. El gate del build recorre todos los artefactos y rechaza marcadores del documento y estilos locales. Véanse [ADR 010](../decisions/010-local-dedications.md) y [QA](../qa/danna-v1.md).
+
+## Perfiles de compilación
+
+[ADR 012](../decisions/012-build-profiles.md) actualiza la exclusividad de desarrollo descrita arriba: el perfil público inyecta `src/routes/index.astro` y `src/routes/demo.astro`; el personal inyecta solo el entrypoint local existente. `src/pages` deja de contener rutas implícitas. Cada perfil emite un directorio independiente y tiene un gate de contenido/rutas/recursos. El personal copia solo favicon, sin fotografías de demo. La autenticación se exige en el hosting para todas las solicitudes; no se añade al renderer ni a Story V2. Véase la [configuración operativa](../deployment-profiles.md).

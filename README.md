@@ -31,7 +31,7 @@ Abrir `http://localhost:4321`, `/demo` y, solo durante desarrollo, `/dev/gsap`. 
 | Comando                | Función                                                                 |
 | ---------------------- | ----------------------------------------------------------------------- |
 | `npm run dev`          | Desarrollo Astro                                                        |
-| `npm run build`        | Generación estática en dist                                             |
+| `npm run build`        | Generación estática pública en dist/public                              |
 | `npm run preview`      | Previsualización del build                                              |
 | `npm run check`        | Tipos y diagnósticos Astro                                              |
 | `npm run lint`         | ESLint en JS, TS, TSX y Astro                                           |
@@ -40,10 +40,14 @@ Abrir `http://localhost:4321`, `/demo` y, solo durante desarrollo, `/dev/gsap`. 
 | `npm test`             | Contratos, SSR y ciclo de vida con Vitest                               |
 | `npm run verify`       | Tipos, lint, formato, pruebas, build y comprobación del HTML/artefactos |
 
+## Perfiles de despliegue
+
+`npm run build` / `npm run build:public` generan solo `/` y `/demo` en `dist/public`. `npm run build:personal` genera solo `/para/danna/` en `dist/personal`, reutilizando el documento y Story Player existentes. `npm run verify` comprueba ambos artefactos. No subir la historia sin validar antes la protección sobre contenido inocuo. Configuración exacta de Vercel, límites actuales por plan y alternativa Cloudflare Access: [guía de despliegue seguro](docs/deployment-profiles.md) y [ADR 012](docs/decisions/012-build-profiles.md).
+
 ## Organización
 
 ```text
-src/pages/                         Rutas Astro
+src/routes/                        Entradas Astro seleccionadas por perfil
 src/components/layout/             Documento y navegación comunes
 src/features/landing/              Universo Vivo: presentación, datos, hooks, animaciones y CSS
 src/features/story-player/
