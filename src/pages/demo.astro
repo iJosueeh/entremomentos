@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import { StoryPlayer } from '../features/story-player';
+import { demoStory } from '../features/story-player/document';
+---
+
+<BaseLayout
+  title={`${demoStory.title} · EntreMomentos`}
+  description="Una historia ficticia de amistad entre Alma y Nico. Tres caminos, tres recuerdos y las palabras que permanecen."
+  fullWidthContent
+>
+  <StoryPlayer story={demoStory} client:load />
+  <div slot="footer" class="demo-closure">
+    <div class="wrap">
+      <p class="release-note">
+        Historia ficticia de Alma y Nico. Paisajes ilustrativos; ningún recuerdo
+        personal.
+      </p>
+    </div>
+    <footer class="wrap footer">
+      <span>EntreMomentos</span>
+      <span>Un lugar para lo que permanece.</span>
+    </footer>
+  </div>
+</BaseLayout>
+
+<style>
+  .demo-closure {
+    background: linear-gradient(
+      transparent,
+      color-mix(in srgb, var(--color-nebula) 12%, var(--surface))
+    );
+  }
+  .demo-closure .release-note {
+    margin-block: 0;
+    padding-block: var(--space-2);
+  }
+  .demo-closure .footer {
+    border-top: 0;
+  }
+</style>

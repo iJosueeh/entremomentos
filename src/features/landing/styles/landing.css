@@ -1,0 +1,595 @@
+.living-universe {
+  --universe-line: color-mix(in srgb, var(--color-lavender) 19%, transparent);
+  --universe-paper: var(--color-ivory);
+  --universe-ink: var(--color-midnight);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+.immersive-page {
+  scrollbar-color: var(--accent) var(--surface);
+}
+.immersive-page ::selection {
+  color: var(--color-midnight);
+  background: var(--color-blush);
+}
+.immersive-page .header {
+  position: relative;
+  z-index: 2;
+  border-bottom-color: var(
+    --universe-line,
+    color-mix(in srgb, var(--text) 12%, transparent)
+  );
+}
+.immersive-page .wordmark {
+  font-size: 1.7rem;
+}
+.immersive-page nav {
+  display: flex;
+  gap: clamp(1.1rem, 4vw, 2.8rem);
+}
+.immersive-page nav a {
+  gap: 0.7rem;
+  text-decoration: none;
+}
+.immersive-page nav a:first-child {
+  display: none;
+}
+.universe-hero {
+  position: relative;
+  min-height: 880px;
+  min-height: max(880px, calc(100svh - 93px));
+  display: grid;
+  align-content: start;
+  padding: 4.3rem 1.25rem 7rem;
+}
+.universe-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: clip;
+  z-index: -1;
+}
+.nebula {
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  pointer-events: none;
+}
+.nebula-lavender {
+  left: -18%;
+  top: 9%;
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--color-lavender) 14%, transparent),
+    color-mix(in srgb, var(--color-nebula) 32%, transparent) 40%,
+    transparent 70%
+  );
+}
+.nebula-blush {
+  right: -35%;
+  top: 20%;
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--color-blush) 9%, transparent),
+    transparent 65%
+  );
+}
+.star-layer {
+  position: absolute;
+  inset: -24px;
+}
+.star-layer i {
+  position: absolute;
+  display: block;
+  background: var(--color-ivory);
+  border-radius: 50%;
+}
+.universe-copy {
+  position: relative;
+  text-align: center;
+  z-index: 1;
+  margin-inline: auto;
+  max-width: 47rem;
+}
+.universe-copy h1 {
+  font-size: clamp(3.2rem, 9.5vw, 6rem);
+  line-height: 1.02;
+  margin: 0;
+  letter-spacing: -0.035em;
+}
+.universe-copy h1 em {
+  display: inline-block;
+}
+.universe-intro {
+  font-size: 0.95rem;
+  color: var(--color-ivory);
+  opacity: 0.85;
+  margin: 1.8rem auto;
+  line-height: 1.9;
+}
+.universe-actions {
+  display: grid;
+  justify-items: center;
+  gap: 1.1rem;
+}
+.universe-cta {
+  padding: 0.95rem 1.6rem;
+  border: 0;
+  background: var(--color-blush);
+  gap: 1.8rem;
+}
+.universe-cta:hover {
+  background: var(--color-ivory);
+}
+.universe-stage {
+  font-size: 0.75rem;
+  color: var(--color-blush);
+}
+.universe-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 7rem;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--color-blush);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.caption-divider {
+  opacity: 0.4;
+  margin-inline: 0.3rem;
+}
+.tiny-star {
+  width: 5px;
+  height: 5px;
+  background: var(--color-blush);
+  border-radius: 50%;
+}
+.memory-orbit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.memory-position {
+  position: absolute;
+  width: 128px;
+}
+.memory-mountain {
+  left: 7%;
+  top: 56%;
+  rotate: -12deg;
+  z-index: 1;
+}
+.memory-forest {
+  right: 8%;
+  top: 60%;
+  rotate: 11deg;
+  z-index: 2;
+  width: 142px;
+}
+.memory-winter {
+  left: 37%;
+  top: 51%;
+  rotate: -4deg;
+  width: 104px;
+  opacity: 0.75;
+}
+.polaroid {
+  margin: 0;
+  padding: 7px 7px 10px;
+  background: var(--universe-paper);
+  color: var(--universe-ink);
+  box-shadow: 0 14px 34px #0005;
+}
+.polaroid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 0.94;
+  object-fit: cover;
+}
+.polaroid figcaption {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  text-align: center;
+  margin-top: 9px;
+}
+.celestial-orbit {
+  position: absolute;
+  border: 1px solid var(--universe-line);
+  border-radius: 50%;
+  left: 50%;
+  top: 62%;
+  translate: -50% -50%;
+  width: 125%;
+  height: 29%;
+  rotate: -19deg;
+}
+.orbit-inner {
+  width: 100%;
+  height: 37%;
+  rotate: 22deg;
+  opacity: 0.45;
+}
+.orbit-light {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: 50%;
+  top: 60%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-lavender) 13%, transparent),
+    transparent 70%
+  );
+}
+.orbit-spark {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: var(--color-blush);
+  rotate: 45deg;
+  box-shadow: 0 0 18px var(--color-blush);
+}
+.spark-one {
+  left: 13%;
+  top: 48%;
+}
+.spark-two {
+  right: 12%;
+  top: 81%;
+  width: 4px;
+  height: 4px;
+}
+.hero-bottom {
+  position: absolute;
+  inset: auto 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.scroll-invitation,
+.motion-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  min-height: 44px;
+  color: var(--color-blush);
+  text-decoration: none;
+}
+.motion-control {
+  border: 1px solid var(--universe-line);
+  border-radius: var(--radius-control);
+  padding: 0.4rem 0.8rem;
+  background: var(--surface);
+  cursor: pointer;
+  transition: background var(--duration-feedback) var(--ease-feedback);
+}
+.motion-control:hover {
+  background: var(--color-nebula);
+}
+.memory-story {
+  max-width: 72rem;
+  width: calc(100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: 5rem 1.5rem;
+  scroll-margin-top: 2rem;
+}
+.story-heading {
+  max-width: 48rem;
+  margin: auto;
+  text-align: center;
+}
+.story-heading > svg {
+  color: var(--accent);
+}
+.story-heading h2 {
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  margin: 1.5rem 0;
+  line-height: 1.12;
+}
+.story-heading > p {
+  max-width: 36rem;
+  margin: auto;
+  color: var(--color-blush);
+  line-height: 1.9;
+  font-size: 0.95rem;
+}
+.memory-letter {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+  margin-top: 4rem;
+}
+.letter-image {
+  position: relative;
+  padding: 0.65rem;
+  background: var(--color-ivory);
+  rotate: -3deg;
+  max-width: 28rem;
+  width: 88%;
+  margin: auto;
+  box-shadow: 0 18px 45px #0003;
+}
+.letter-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.15;
+  object-fit: cover;
+}
+.letter-image > span {
+  display: block;
+  padding: 1rem 0.3rem 0.6rem;
+  font-family: var(--font-display);
+  color: var(--color-midnight);
+  font-style: italic;
+  font-size: 1.3rem;
+  text-align: center;
+}
+.letter-copy {
+  padding-inline: 0.5rem;
+}
+.sample-label {
+  font-size: 0.7rem;
+  color: var(--color-blush);
+}
+.letter-quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.2vw, 2.65rem);
+  line-height: 1.3;
+}
+.letter-copy > p:not(.letter-quote) {
+  color: var(--color-blush);
+  font-size: 0.875rem;
+  max-width: 22rem;
+}
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+  min-height: 44px;
+  font-size: 0.875rem;
+  text-decoration-thickness: 1px;
+}
+.landing-close {
+  text-align: center;
+  padding-block: 5rem 3rem;
+}
+.closing-line {
+  display: block;
+  width: 1px;
+  height: 4rem;
+  background: linear-gradient(transparent, var(--color-lavender));
+  margin-inline: auto;
+}
+.landing-close p {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.35;
+  margin: 2rem auto 0;
+}
+.image-credits {
+  font-size: 0.7rem;
+  line-height: 1.8;
+  color: var(--color-blush);
+  margin: 2rem auto 0;
+  text-align: center;
+  max-width: 46rem;
+}
+@media (min-width: 48rem) {
+  .immersive-page nav a:first-child {
+    display: inline-flex;
+  }
+  .universe-hero {
+    min-height: max(740px, calc(100svh - 93px));
+    align-content: center;
+    padding: 3rem 1.5rem 9rem;
+  }
+  .universe-copy {
+    width: 75%;
+  }
+  .universe-copy h1 {
+    font-size: clamp(4.5rem, 7.1vw, 6rem);
+  }
+  .universe-intro {
+    font-size: 1rem;
+  }
+  .memory-position {
+    width: clamp(140px, 15vw, 210px);
+  }
+  .memory-mountain {
+    left: -3%;
+    top: 21%;
+  }
+  .memory-forest {
+    right: -2%;
+    top: 46%;
+    width: clamp(155px, 16vw, 224px);
+  }
+  .memory-winter {
+    left: auto;
+    right: 10%;
+    top: 6%;
+    width: clamp(104px, 10vw, 144px);
+    opacity: 0.65;
+  }
+  .polaroid {
+    padding: 9px 9px 14px;
+  }
+  .polaroid figcaption {
+    font-size: 0.9rem;
+  }
+  .celestial-orbit {
+    top: 47%;
+    width: 108%;
+    height: 56%;
+    rotate: -15deg;
+  }
+  .orbit-inner {
+    width: 85%;
+    height: 78%;
+    rotate: 22deg;
+  }
+  .orbit-light {
+    top: 42%;
+    width: 580px;
+    height: 580px;
+  }
+  .spark-one {
+    top: 72%;
+    left: 25%;
+  }
+  .spark-two {
+    top: 29%;
+    right: 20%;
+  }
+  .universe-caption {
+    bottom: 6rem;
+  }
+  .hero-bottom {
+    left: 3rem;
+    right: 3rem;
+  }
+  .memory-story {
+    width: calc(100% - 6rem);
+    padding-top: 7rem;
+  }
+  .memory-letter {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 6rem;
+  }
+  .letter-image {
+    width: 100%;
+  }
+  .landing-close {
+    padding-top: 7rem;
+  }
+}
+@media (min-width: 80rem) {
+  .memory-mountain {
+    left: max(3%, calc(50% - 650px));
+    top: 20%;
+  }
+  .memory-forest {
+    right: max(3%, calc(50% - 640px));
+    top: 44%;
+  }
+  .memory-winter {
+    right: max(15%, calc(50% - 440px));
+    top: 4%;
+  }
+  .celestial-orbit {
+    width: 90%;
+    max-width: 1380px;
+  }
+  .orbit-inner {
+    width: 72%;
+    max-width: 1100px;
+  }
+}
+@media (max-width: 23rem) {
+  .universe-hero {
+    min-height: 900px;
+    padding-inline: 1rem;
+  }
+  .universe-copy h1 {
+    font-size: 2.9rem;
+  }
+  .universe-stage {
+    max-width: 15rem;
+  }
+  .memory-mountain {
+    left: 2%;
+  }
+  .memory-forest {
+    right: 2%;
+  }
+  .hero-bottom {
+    gap: 0.3rem;
+    left: 1rem;
+    right: 1rem;
+  }
+  .motion-control {
+    font-size: 0.65rem;
+    padding-inline: 0.65rem;
+  }
+  .immersive-page .wordmark {
+    font-size: 1.5rem;
+  }
+  .immersive-page nav {
+    font-size: 0.75rem;
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .text-link svg,
+  .universe-cta svg {
+    transition: transform var(--duration-feedback) var(--ease-feedback);
+  }
+  .text-link:hover svg,
+  .universe-cta:hover svg {
+    transform: translate(2px, -2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-control {
+    display: none;
+  }
+  .universe-cta:hover {
+    transform: none;
+  }
+}
+/* Keep the mobile collage in document flow as text grows or fonts fall back. */
+@media (max-width: 47.999rem) {
+  .universe-hero {
+    padding-bottom: 9rem;
+  }
+  .universe-copy {
+    grid-row: 1;
+  }
+  .memory-orbit {
+    position: relative;
+    inset: auto;
+    grid-row: 2;
+    height: 300px;
+    margin-top: 2rem;
+  }
+  .memory-mountain {
+    top: 20%;
+  }
+  .memory-forest {
+    top: 30%;
+  }
+  .memory-winter {
+    top: 0;
+  }
+  .celestial-orbit {
+    top: 50%;
+    height: 52%;
+  }
+  .orbit-inner {
+    height: 76%;
+  }
+  .orbit-light {
+    top: 50%;
+  }
+  .spark-one {
+    top: 5%;
+  }
+  .spark-two {
+    top: 84%;
+  }
+}

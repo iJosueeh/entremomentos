@@ -1,0 +1,36 @@
+{
+  "note": "Fotografías de stock de ejemplo, sin recuerdos personales. Archivos copiados del catálogo local de design-taste-frontend; redimensionadas a 640px y comprimidas a WebP, sin cambio de color. M1.1 incluye una variante de bosque a 1280px; misma fuente y licencia.",
+  "photos": [
+    {
+      "file": "demo-mountain.webp",
+      "id": "465",
+      "alt": "Dark rocky peak emerging from thick white cloud",
+      "by": "Paula Vermeulen",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license",
+      "page": "https://unsplash.com/photos/_f2m3mEkaaU",
+      "source": "Unsplash"
+    },
+    {
+      "file": "demo-forest.webp",
+      "id": "d540",
+      "alt": "Orange gravel road bending through autumn forest under a stormy grey sky",
+      "by": "Tony Webster from Minneapolis, Minnesota, United States",
+      "licence": "CC BY 2.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:Autumn_on_Ottawa_National_Forest_Road_Trip_-_Michigan_Upper_Peninsula_Fall_Colors_(29423477943).jpg",
+      "source": "Wikimedia Commons",
+      "files": ["demo-forest.webp", "demo-forest-large.webp"]
+    },
+    {
+      "file": "demo-winter.webp",
+      "id": "559",
+      "alt": "Snow-covered lane lined with bare frosted trees",
+      "by": "Ali Inay",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license",
+      "page": "https://unsplash.com/photos/yNaGxHqjOuw",
+      "source": "Unsplash"
+    }
+  ]
+}

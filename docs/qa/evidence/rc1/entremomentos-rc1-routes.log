@@ -1,0 +1,3 @@
+dev [{"pattern":"/dev/gsap","entrypoint":"./src/features/story-player/dev/lab.astro"},{"pattern":"/para/danna/","entrypoint":"./src/features/story-player/local/danna.astro"}]
+build []
+preview []

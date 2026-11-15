@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import { Landing } from '../features/landing';
+---
+
+<BaseLayout
+  title="EntreMomentos · Un universo de recuerdos"
+  description="Tus fotografías, tus palabras, tu historia. Descubre EntreMomentos, un pequeño universo de historias emocionales interactivas para compartir."
+  immersive
+>
+  <Landing client:load />
+</BaseLayout>

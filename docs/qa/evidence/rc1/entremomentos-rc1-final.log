@@ -1,0 +1,50 @@
+npm notice run entremomentos@0.0.0 verify
+npm notice run npm run check && npm run lint && npm run format:check && npm test && npm run build && node scripts/check-story-build.mjs
+npm notice run entremomentos@0.0.0 check
+npm notice run astro check
+16:34:56 [types] Generated 98ms
+16:34:56 [check] Getting diagnostics for Astro files in /home/ijosueeh/Documentos/Proyectos/entremomentos...
+Result (80 files): 
+- 0 errors
+- 0 warnings
+- 0 hints
+
+npm notice run entremomentos@0.0.0 lint
+npm notice run eslint .
+npm notice run entremomentos@0.0.0 format:check
+npm notice run prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+npm notice run entremomentos@0.0.0 test
+npm notice run vitest run
+
+ RUN  v4.1.12 /home/ijosueeh/Documentos/Proyectos/entremomentos
+
+
+ Test Files  15 passed (15)
+      Tests  158 passed (158)
+   Start at  16:35:07
+   Duration  1.91s (transform 4.81s, setup 0ms, import 9.31s, tests 1.07s, environment 6ms)
+
+npm notice run entremomentos@0.0.0 build
+npm notice run astro build
+16:35:10 [types] Generated 59ms
+16:35:10 [build] output: "static"
+16:35:10 [build] mode: "static"
+16:35:10 [build] directory: /home/ijosueeh/Documentos/Proyectos/entremomentos/dist/
+16:35:10 [build] Collecting build info...
+16:35:10 [build] ✓ Completed in 133ms.
+16:35:10 [build] Building static entrypoints...
+16:35:11 [vite] ✓ built in 379ms
+16:35:12 [vite] ✓ built in 697ms
+16:35:12 [build] Rearranging server assets...
+
+ generating static routes 
+16:35:12   ├─ /demo/index.html (+135ms) 
+16:35:12   ├─ /index.html (+10ms) 
+16:35:12 ✓ Completed in 170ms.
+
+16:35:12 [build] ✓ Completed in 1.31s.
+16:35:12 [build] 2 page(s) built in 1.45s
+16:35:12 [build] Complete!
+Build: seis escenas SSR, anclas, landing y exclusión del laboratorio y la dedicatoria local aprobados.

@@ -1,0 +1,11 @@
+npm notice run entremomentos@0.0.0 npx
+npm notice run 'vitest' run tests/story-letter.test.ts tests/story-memory-viewer.test.ts
+
+ RUN  v4.1.12 /home/ijosueeh/Documentos/Proyectos/entremomentos
+
+
+ Test Files  2 passed (2)
+      Tests  39 passed (39)
+   Start at  16:32:28
+   Duration  511ms (transform 225ms, setup 0ms, import 400ms, tests 79ms, environment 0ms)
+

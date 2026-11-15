@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../../components/layout/BaseLayout.astro';
+import { MotionDemo, demoStory } from './index';
+---
+
+<BaseLayout
+  title="Laboratorio GSAP · EntreMomentos"
+  description="Herramienta interna de desarrollo para comprobar montaje, desmontaje y movimiento reducido."
+>
+  <h1>Laboratorio GSAP</h1>
+  <p>Prueba técnica M0. Disponible únicamente en desarrollo.</p>
+  <MotionDemo story={demoStory} client:load />
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../../components/layout/BaseLayout.astro';
+import { StoryPlayer } from '../index';
+import { dannaStory } from './danna-story';
+import './preview.css';
+---
+
+<BaseLayout
+  title={`${dannaStory.title} · EntreMomentos`}
+  description="Una dedicatoria para ti."
+  fullWidthContent
+>
+  <div class="dedication-preview">
+    <StoryPlayer story={dannaStory} client:load />
+  </div>
+</BaseLayout>

@@ -1,0 +1,61 @@
+---
+import '../../styles/global.css';
+interface Props {
+  title: string;
+  description: string;
+  immersive?: boolean;
+  fullWidthContent?: boolean;
+}
+const {
+  title,
+  description,
+  immersive = false,
+  fullWidthContent = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#101426" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class:list={{ 'immersive-page': immersive }}>
+    <a class="skip-link" href="#contenido">
+      Saltar al contenido
+    </a>
+    <header class="wrap header">
+      <a href="/" class="wordmark" aria-label="EntreMomentos, inicio">
+        EntreMomentos<span aria-hidden="true">✧</span>
+      </a>
+      <nav aria-label="Principal">
+        {immersive && <a href="#un-recuerdo">La idea</a>}
+        <a href="/demo">
+          Explorar demo <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </header>
+    <main id="contenido" class:list={{ wrap: !immersive && !fullWidthContent }}>
+      <slot />
+    </main>
+    <slot name="footer">
+      <footer class="wrap footer">
+        <span>EntreMomentos</span>
+        <span>Un lugar para lo que permanece.</span>
+      </footer>
+    </slot>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+export const playerMotion = {
+  photo: { duration: 0.56, ease: 'power2.inOut' },
+  atmosphere: {
+    distance: 16,
+    scrub: 0.5,
+    start: 'top bottom',
+    end: 'bottom top',
+  },
+  letter: {
+    flap: 0.32,
+    paper: 0.54,
+    distance: 72,
+    ease: 'power2.inOut',
+    closeSpeed: 1.2,
+  },
+  epilogue: { start: 'top 85%', end: 'center 45%', scrub: 0.5 },
+  entrance: {
+    duration: 1.1,
+    titleDuration: 0.8,
+    distance: 12,
+    ease: 'power2.out',
+  },
+  intro: { distance: 64, scrub: 0.5 },
+  memories: {
+    start: 'top 95%',
+    end: 'bottom 15%',
+    scrub: 0.5,
+    initialScale: 0.985,
+    initialOpacity: 0.78,
+    drift: 1.5,
+    scale: 1.04,
+    ease: 'power2.out',
+  },
+  connection: {
+    scrub: 0.5,
+    start: 'top 85%',
+    end: 'center 45%',
+    first: { x: -72, y: 64 },
+    second: { x: 52, y: -56 },
+  },
+} as const;
