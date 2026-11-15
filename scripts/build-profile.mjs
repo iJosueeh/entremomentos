@@ -2,7 +2,10 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 
 const profile = process.argv[2];
-assert(['public', 'personal'].includes(profile), 'Perfil desconocido');
+assert(
+  ['public', 'personal', 'unified'].includes(profile),
+  'Perfil desconocido',
+);
 assert(
   !process.env.BUILD_PROFILE || process.env.BUILD_PROFILE === profile,
   'BUILD_PROFILE no coincide con el comando: abortando para evitar mezclar artefactos',

@@ -80,3 +80,7 @@ La misma feature incorpora Polaroid reutilizable, StoryActs y un proxy decorativ
 ## Perfiles de compilación
 
 [ADR 012](../decisions/012-build-profiles.md) actualiza la exclusividad de desarrollo descrita arriba: el perfil público inyecta `src/routes/index.astro` y `src/routes/demo.astro`; el personal inyecta solo el entrypoint local existente. `src/pages` deja de contener rutas implícitas. Cada perfil emite un directorio independiente y tiene un gate de contenido/rutas/recursos. El personal copia solo favicon, sin fotografías de demo. La autenticación se exige en el hosting para todas las solicitudes; no se añade al renderer ni a Story V2. Véase la [configuración operativa](../deployment-profiles.md).
+
+## Despliegue unificado v1
+
+[ADR 013](../decisions/013-unified-deployment.md) sustituye la obligación de dos proyectos: `unified` es el perfil predeterminado y registra las tres entradas existentes en `dist/unified`. `public` y `personal` conservan sus salidas aisladas. Danna es pública sin control de acceso por decisión explícita; solo su documento lleva noindex. No hay sitemap, ni fotos personales añadidas, ni cambios al contrato o al renderer. La restricción a desarrollo de los apartados históricos anteriores ya no aplica a unified/personal. Configuración vigente en [despliegue](../deployment-profiles.md).

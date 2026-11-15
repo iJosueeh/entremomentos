@@ -26,12 +26,12 @@ npm install
 npm run dev
 ```
 
-Abrir `http://localhost:4321`, `/demo` y, solo durante desarrollo, `/dev/gsap`. La dedicatoria local está en `/para/danna/`: ejecutar `npm run dev -- --host 127.0.0.1`. Esa ruta y su documento se excluyen del build público; no se publica el servidor de desarrollo. Ver [verificación de privacidad y QA](docs/qa/danna-v1.md). Conservar el `package-lock.json` existente y usar `npm ci` para reproducirlo. La instalación limpia y los peers están verificados; conservar los pendientes de navegador y mantenimiento registrados en verification. No usar `--force` ni `--legacy-peer-deps` para ocultar incompatibilidades.
+Abrir `http://localhost:4321`, `/demo` y, solo durante desarrollo, `/dev/gsap`. La dedicatoria local está en `/para/danna/`: ejecutar `npm run dev -- --host 127.0.0.1`. Esa ruta se incluye en el build unificado y es pública sin control de acceso por decisión explícita para v1; el perfil separado `public` la excluye. No se publica el servidor de desarrollo. Ver [verificación de privacidad y QA](docs/qa/danna-v1.md). Conservar el `package-lock.json` existente y usar `npm ci` para reproducirlo. La instalación limpia y los peers están verificados; conservar los pendientes de navegador y mantenimiento registrados en verification. No usar `--force` ni `--legacy-peer-deps` para ocultar incompatibilidades.
 
 | Comando                | Función                                                                 |
 | ---------------------- | ----------------------------------------------------------------------- |
 | `npm run dev`          | Desarrollo Astro                                                        |
-| `npm run build`        | Generación estática pública en dist/public                              |
+| `npm run build`        | Generación estática unificada en dist/unified                           |
 | `npm run preview`      | Previsualización del build                                              |
 | `npm run check`        | Tipos y diagnósticos Astro                                              |
 | `npm run lint`         | ESLint en JS, TS, TSX y Astro                                           |
@@ -42,7 +42,9 @@ Abrir `http://localhost:4321`, `/demo` y, solo durante desarrollo, `/dev/gsap`. 
 
 ## Perfiles de despliegue
 
-`npm run build` / `npm run build:public` generan solo `/` y `/demo` en `dist/public`. `npm run build:personal` genera solo `/para/danna/` en `dist/personal`, reutilizando el documento y Story Player existentes. `npm run verify` comprueba ambos artefactos. No subir la historia sin validar antes la protección sobre contenido inocuo. Configuración exacta de Vercel, límites actuales por plan y alternativa Cloudflare Access: [guía de despliegue seguro](docs/deployment-profiles.md) y [ADR 012](docs/decisions/012-build-profiles.md).
+`npm run build` / `npm run build:unified` generan `/`, `/demo/` y `/para/danna/` en `dist/unified` para el único proyecto existente `entremomentos.vercel.app`. Danna es pública sin autenticación, con `noindex` como indicación de indexación; no hay sitemap ni fotografías personales. No se despliega automáticamente.
+
+Se conservan `build:public` (solo Landing y Demo en `dist/public`) y `build:personal` (solo Danna en `dist/personal`). `npm run verify` comprueba los tres artefactos; ejecutar sin `BUILD_PROFILE` definido. `npm run preview` sirve unified; `preview:public` y `preview:personal` sirven las salidas separadas. Configuración exacta de Vercel: [guía de despliegue](docs/deployment-profiles.md), [ADR 013](docs/decisions/013-unified-deployment.md) y [QA actual](docs/qa/unified-deployment.md).
 
 ## Organización
 

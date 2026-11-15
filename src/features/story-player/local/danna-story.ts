@@ -1,6 +1,6 @@
 import { storySchema } from '../schemas/story';
 
-// Local development entry only: never export through the public player APIs.
+// Dedicated document entry: never export through the shared player APIs.
 export const dannaStory = storySchema.parse({
   schemaVersion: 2,
   id: 'danna-que-bonito-que-existas',

@@ -1,6 +1,8 @@
 # ADR 012 — Builds público y personal aislados
 
-Estado: implementado localmente; publicación personal bloqueada hasta verificar acceso en hosting. Actualiza la restricción de solo desarrollo de ADR 010; no cambia Story V2.
+Estado histórico: sustituido para v1 por [ADR 013](013-unified-deployment.md). Los perfiles separados se conservan; los dos proyectos y la prueba de protección ya no son requisito de la versión pública unificada.
+
+Estado original: implementado localmente; publicación personal bloqueada hasta verificar acceso en hosting. Actualiza la restricción de solo desarrollo de ADR 010; no cambia Story V2.
 
 El 404 resulta de registrar Danna solo durante `astro dev`. Habilitarla en el build único expondría la historia en el sitio público. Se eligen dos proyectos de hosting y dos grafos de entrada estáticos; no se añade un modo al renderer ni se duplican componentes o narrativa.
 

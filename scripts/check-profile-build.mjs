@@ -13,11 +13,16 @@ const publicAssets = [
 ];
 
 export async function checkProfileBuild(profile, directory) {
-  assert(['public', 'personal'].includes(profile), 'Perfil desconocido');
+  assert(
+    ['public', 'personal', 'unified'].includes(profile),
+    'Perfil desconocido',
+  );
   const personal = profile === 'personal';
   const expectedRoutes = personal
     ? ['para/danna/index.html']
-    : ['demo/index.html', 'index.html'];
+    : profile === 'unified'
+      ? ['demo/index.html', 'index.html', 'para/danna/index.html']
+      : ['demo/index.html', 'index.html'];
   const assets = personal ? ['favicon.svg'] : publicAssets;
   const entries = await readdir(directory, {
     recursive: true,
@@ -59,7 +64,10 @@ export async function checkProfileBuild(profile, directory) {
         /\bAlma\b|\bNico\b|data-universe-hero|data-forest-anchor|demo-forest|demo-closure/,
         `Contenido público incluido: ${file}`,
       );
-    } else {
+    } else if (
+      profile === 'public' ||
+      ['index.html', 'demo/index.html'].includes(file)
+    ) {
       assert.doesNotMatch(
         file + content,
         /danna|josue|dedication-preview|Quería hacerte algo diferente|A veces siento que las palabras se quedan cortas|pequeño universo que hice pensando en ti/i,
@@ -88,7 +96,7 @@ export async function checkProfileBuild(profile, directory) {
       `Chunk sin referencia desde las rutas previstas: ${file}`,
     );
   }
-  if (personal) {
+  if (profile !== 'public') {
     const html = contents.get('para/danna/index.html');
     assert.match(html, /Danna, qué bonito que existas/);
     assert.match(html, /Con mucho cariño, Josue/);
@@ -97,9 +105,44 @@ export async function checkProfileBuild(profile, directory) {
       ['intro', 'connection', 'memories', 'discovery', 'letter', 'epilogue'],
     );
     assert.match(html, /astro-island/);
+    assert.match(html, /<meta name="robots" content="noindex, nofollow"/);
+    assert.doesNotMatch(
+      html,
+      /<img\b/,
+      'La dedicatoria aprobada no contiene fotos',
+    );
+  }
+  // Check emitted local references, including lazy chunks and CSS assets.
+  for (const [file, content] of contents) {
+    if (!/\.(html|js|css)$/.test(file)) continue;
+    const references = [
+      ...(file.endsWith('.html')
+        ? content.matchAll(/(?:src|href|poster)="([^"#]+)"/g)
+        : []),
+      ...content.matchAll(/(?:from\s*|import\s*\(|import\s*)["']([^"']+)["']/g),
+      ...(!file.endsWith('.js')
+        ? content.matchAll(/url\(["']?([^\s)"']+)/g)
+        : []),
+    ];
+    for (const [, rawReference] of references) {
+      const reference = rawReference
+        .replaceAll('&quot;', '"')
+        .replaceAll('&amp;', '&')
+        .replace(/^["']|["']$/g, '');
+      if (/^(?:[a-z]+:|\/\/|#)/i.test(reference)) continue;
+      const path = decodeURI(
+        new URL(reference, `https://build.local/${file}`).pathname,
+      ).slice(1);
+      assert(
+        files.includes(path) ||
+          files.includes(`${path.replace(/\/$/, '')}/index.html`) ||
+          (path === '' && files.includes('index.html')),
+        `Recurso o enlace local faltante en ${file}: ${reference}`,
+      );
+    }
   }
   console.log(
-    `Perfil ${profile}: rutas, contenido y recursos aislados (${files.length} archivos).`,
+    `Perfil ${profile}: rutas, contenido y recursos comprobados (${files.length} archivos).`,
   );
 }
 

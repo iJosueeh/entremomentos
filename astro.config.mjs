@@ -3,14 +3,14 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import { copyFile } from 'node:fs/promises';
 
-const profile = process.env.BUILD_PROFILE ?? 'public';
-if (!['public', 'personal'].includes(profile)) {
-  throw new Error('BUILD_PROFILE debe ser public o personal');
+const profile = process.env.BUILD_PROFILE ?? 'unified';
+if (!['public', 'personal', 'unified'].includes(profile)) {
+  throw new Error('BUILD_PROFILE debe ser public, personal o unified');
 }
 const personal = profile === 'personal';
 
 export default defineConfig({
-  outDir: personal ? './dist/personal' : './dist/public',
+  outDir: `./dist/${profile}`,
   // No personal static directory exists; copy only the allowlisted favicon below.
   publicDir: personal ? './public-personal' : './public',
   integrations: [
@@ -29,7 +29,7 @@ export default defineConfig({
               entrypoint: './src/routes/demo.astro',
             });
           }
-          if (personal || command === 'dev') {
+          if (profile !== 'public' || command === 'dev') {
             injectRoute({
               pattern: '/para/danna/',
               entrypoint: './src/features/story-player/local/danna.astro',

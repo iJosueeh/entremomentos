@@ -20,7 +20,7 @@ async function personalFixture() {
   await writeFile(join(directory, 'favicon.svg'), '<svg/>');
   await writeFile(
     join(directory, 'para/danna/index.html'),
-    'Danna, qué bonito que existas Con mucho cariño, Josue <astro-island>' +
+    '<meta name="robots" content="noindex, nofollow">Danna, qué bonito que existas Con mucho cariño, Josue <astro-island>' +
       ['intro', 'connection', 'memories', 'discovery', 'letter', 'epilogue']
         .map((scene) => `<section data-scene="${scene}"></section>`)
         .join('') +
@@ -97,5 +97,64 @@ describe('build artifact isolation gate', () => {
     await expect(
       checkProfileBuild('public', directory),
     ).resolves.toBeUndefined();
+  });
+});
+
+describe('unified build gate', () => {
+  async function unifiedFixture() {
+    const directory = await personalFixture();
+    await mkdir(join(directory, 'demo'));
+    await mkdir(join(directory, 'images'));
+    await writeFile(join(directory, 'index.html'), '<a href="/demo/">Demo</a>');
+    await writeFile(join(directory, 'demo/index.html'), 'Demo');
+    for (const name of [
+      'credits.json',
+      'demo-forest-large.webp',
+      'demo-forest.webp',
+      'demo-mountain.webp',
+      'demo-winter.webp',
+    ])
+      await writeFile(join(directory, 'images', name), 'fixture');
+    return directory;
+  }
+
+  it('requires all three routes while accepting the approved dedication', async () => {
+    const directory = await unifiedFixture();
+    await expect(
+      checkProfileBuild('unified', directory),
+    ).resolves.toBeUndefined();
+    await rm(join(directory, 'demo/index.html'));
+    await expect(checkProfileBuild('unified', directory)).rejects.toThrow(
+      'Rutas inesperadas',
+    );
+  });
+
+  it('rejects personal references in public pages and missing local assets', async () => {
+    const directory = await unifiedFixture();
+    await writeFile(
+      join(directory, 'index.html'),
+      '<meta name="description" content="Danna">',
+    );
+    await expect(checkProfileBuild('unified', directory)).rejects.toThrow(
+      'Contenido personal incluido',
+    );
+    await writeFile(join(directory, 'index.html'), '<img src="/missing.webp">');
+    await expect(checkProfileBuild('unified', directory)).rejects.toThrow(
+      'Recurso o enlace local faltante',
+    );
+  });
+
+  it('requires noindex on the dedication', async () => {
+    const directory = await unifiedFixture();
+    const { readFile } = await import('node:fs/promises');
+    const file = join(directory, 'para/danna/index.html');
+    await writeFile(
+      file,
+      (await readFile(file, 'utf8')).replace(
+        '<meta name="robots" content="noindex, nofollow">',
+        '',
+      ),
+    );
+    await expect(checkProfileBuild('unified', directory)).rejects.toThrow();
   });
 });
