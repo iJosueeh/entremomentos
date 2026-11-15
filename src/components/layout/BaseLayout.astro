@@ -5,7 +5,6 @@ interface Props {
   description: string;
   immersive?: boolean;
   fullWidthContent?: boolean;
-  publicSiteUrl?: string;
   noindex?: boolean;
 }
 const {
@@ -13,7 +12,6 @@ const {
   description,
   immersive = false,
   fullWidthContent = false,
-  publicSiteUrl = '',
   noindex = false,
 } = Astro.props;
 ---
@@ -43,16 +41,12 @@ const {
       Saltar al contenido
     </a>
     <header class="wrap header">
-      <a
-        href={`${publicSiteUrl}/`}
-        class="wordmark"
-        aria-label="EntreMomentos, inicio"
-      >
+      <a href="/" class="wordmark" aria-label="EntreMomentos, inicio">
         EntreMomentos<span aria-hidden="true">✧</span>
       </a>
       <nav aria-label="Principal">
         {immersive && <a href="#un-recuerdo">La idea</a>}
-        <a href={`${publicSiteUrl}/demo`}>
+        <a href="/demo">
           Explorar demo <span aria-hidden="true">↗</span>
         </a>
       </nav>

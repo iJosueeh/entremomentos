@@ -73,14 +73,8 @@ El contexto `matchMedia` revierte sus tweens y ScrollTriggers al cambiar movimie
 
 La misma feature incorpora Polaroid reutilizable, StoryActs y un proxy decorativo de bosque. El controlador create-story-animation mide anclajes SSR y usa story-geometry para interpolación reversible; motion define breakpoint y duración del único pin. Hook espera fuentes/imágenes, descarta imports tardíos y conserva lectura al reconstruir por pausa. Los anclajes originales se restauran en modo estático. Ver ADR 003 y verification para límites de evidencia.
 
-## Dedicatoria local v1
+## Dedicatoria y build estándar
 
-`features/story-player/local/danna.astro` compone la API pública del mismo renderer y valida su documento independiente. Se inyecta como `/para/danna/` únicamente con `command === 'dev'`; queda fuera de `pages`, de `public` y de las entradas públicas del player. Sus estilos de previsualización acotan el scroll interno de la carta larga y reservan espacio tras la mejora cliente sin cambiar la demo ni GSAP. El gate del build recorre todos los artefactos y rechaza marcadores del documento y estilos locales. Véanse [ADR 010](../decisions/010-local-dedications.md) y [QA](../qa/danna-v1.md).
+`features/story-player/local/danna.astro` compone la API pública del mismo renderer y valida su documento independiente. `astro.config.mjs` registra siempre las entradas existentes de Landing, Demo y Danna; el laboratorio se registra exclusivamente con `command === 'dev'`. No hay rutas implícitas en `src/pages` ni selección de perfiles.
 
-## Perfiles de compilación
-
-[ADR 012](../decisions/012-build-profiles.md) actualiza la exclusividad de desarrollo descrita arriba: el perfil público inyecta `src/routes/index.astro` y `src/routes/demo.astro`; el personal inyecta solo el entrypoint local existente. `src/pages` deja de contener rutas implícitas. Cada perfil emite un directorio independiente y tiene un gate de contenido/rutas/recursos. El personal copia solo favicon, sin fotografías de demo. La autenticación se exige en el hosting para todas las solicitudes; no se añade al renderer ni a Story V2. Véase la [configuración operativa](../deployment-profiles.md).
-
-## Despliegue unificado v1
-
-[ADR 013](../decisions/013-unified-deployment.md) sustituye la obligación de dos proyectos: `unified` es el perfil predeterminado y registra las tres entradas existentes en `dist/unified`. `public` y `personal` conservan sus salidas aisladas. Danna es pública sin control de acceso por decisión explícita; solo su documento lleva noindex. No hay sitemap, ni fotos personales añadidas, ni cambios al contrato o al renderer. La restricción a desarrollo de los apartados históricos anteriores ya no aplica a unified/personal. Configuración vigente en [despliegue](../deployment-profiles.md).
+[ADR 014](../decisions/014-standard-build.md) sustituye los perfiles de ADR 012/013: `npm run build` produce las tres rutas en la salida estándar `dist/`; no se configura outDir ni publicDir. Los gates comprueban rutas, contenido, recursos y exclusión del laboratorio. No se modifica Story V2 ni el renderer. Danna es pública sin control de acceso por decisión expresa; solo su documento lleva noindex. No hay sitemap ni fotos personales añadidas. Configuración vigente en [despliegue](../deployment-profiles.md).

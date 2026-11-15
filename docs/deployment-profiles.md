@@ -1,59 +1,44 @@
-# Un solo proyecto Vercel — EntreMomentos
+# Despliegue estándar — EntreMomentos
 
-Decisión vigente: 2026-11-15, [ADR 013](decisions/013-unified-deployment.md). Preparación local, sin despliegue ni cambios en el dashboard. Sustituye la recomendación anterior de dos proyectos de ADR 012.
+Decisión vigente: [ADR 014](decisions/014-standard-build.md). Un único proyecto Astro y el proyecto Vercel existente **https://entremomentos.vercel.app**. Preparación local; sin despliegue ni cambios del dashboard.
 
-## Artefactos y rutas
+## Build y rutas
 
-| Perfil                     | Comando                                   | Output Directory | Rutas                         |
-| -------------------------- | ----------------------------------------- | ---------------- | ----------------------------- |
-| Unificado (predeterminado) | `npm run build:unified` o `npm run build` | `dist/unified`   | `/`, `/demo/`, `/para/danna/` |
-| Público separado           | `npm run build:public`                    | `dist/public`    | `/`, `/demo/`                 |
-| Personal separado          | `npm run build:personal`                  | `dist/personal`  | `/para/danna/`                |
+```bash
+npm ci
+npm run verify
+npm run preview -- --host 127.0.0.1
+```
 
-Un único build unificado reutiliza las entradas existentes, Story V2 y Story Player; no duplica historias ni componentes. El laboratorio `/dev/gsap` sigue limitado a desarrollo. Public y unified copian los recursos demostrativos actuales de `public/`; personal copia únicamente el favicon mediante allowlist. No subir `dist` completo: puede contener artefactos de otros perfiles.
+`npm run build` ejecuta Astro y los gates sobre su salida estándar `dist/`. Genera `/`, `/demo/` y `/para/danna/` en el mismo artefacto. `npm run preview` sirve ese directorio. No hay selección de perfiles ni directorios de salida alternativos. `BUILD_PROFILE` ya no se lee; eliminar esa variable de la configuración anterior. Astro limpia la salida al compilar: los antiguos subdirectorios no deben quedar dentro de `dist/`.
 
-`BUILD_PROFILE` admite `unified`, `public` o `personal`. Ausente significa `unified` en Astro. Los scripts fijan explícitamente el perfil y abortan si una variable existente contradice el comando. `npm run verify` necesita esa variable sin definir para compilar y comprobar los tres perfiles.
+Las rutas reutilizan Story V2, Story Player y sus documentos existentes. `/dev/gsap` se registra solo durante desarrollo. No se duplican historias, componentes ni animaciones.
 
-## Configuración del proyecto existente
+## Configuración del proyecto Vercel existente
 
-Usar únicamente el proyecto que sirve **https://entremomentos.vercel.app**. No crear un proyecto adicional.
+| Ajuste               | Valor                                                                         |
+| -------------------- | ----------------------------------------------------------------------------- |
+| Framework Preset     | Astro                                                                         |
+| Root Directory       | Directorio con este `package.json`; `.` si es raíz del repositorio            |
+| Install Command      | `npm ci`                                                                      |
+| Build Command        | `npm run build`                                                               |
+| Output Directory     | `dist` (valor estándar de Astro; retirar el override anterior o poner `dist`) |
+| Node.js Version      | 24.x, compatible con `>=24.22.1 <25` de engines                               |
+| Variables necesarias | Ninguna; eliminar `BUILD_PROFILE` de Production, Preview y Development        |
+| Dominio              | Conservar `entremomentos.vercel.app`                                          |
 
-| Ajuste                                               | Valor                                                                   |
-| ---------------------------------------------------- | ----------------------------------------------------------------------- |
-| Framework Preset                                     | Astro                                                                   |
-| Root Directory                                       | Directorio con este `package.json`; `.` si es raíz del repositorio      |
-| Install Command                                      | `npm ci`                                                                |
-| Build Command (override)                             | `npm run build:unified`                                                 |
-| Output Directory (override)                          | `dist/unified`                                                          |
-| Node.js Version                                      | 24.x, compatible con `>=24.22.1 <25` de engines                         |
-| Variables necesarias                                 | Ninguna; el comando ya establece el perfil                              |
-| `BUILD_PROFILE` si se conserva una variable anterior | Eliminarla o cambiarla a `unified` en Production, Preview y Development |
-| Dominio                                              | Conservar `entremomentos.vercel.app`                                    |
+No se requiere adaptador, SSR, función ni secretos para este sitio estático. Referencias: [Astro estático en Vercel](https://vercel.com/docs/frameworks/frontend/astro#static-rendering) y [versiones de Node](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions). La versión menor/parche debe satisfacer engines; comprobarla en el log del build.
 
-Vercel admite [Astro estático](https://vercel.com/docs/frameworks/frontend/astro#static-rendering) sin adaptador. Seleccionar explícitamente [Node 24.x](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions) y confirmar en el log que cumple engines: Vercel administra las versiones menores/parches. No se requiere SSR, función, token, secreto ni variable `PUBLIC_*`. No se añadió configuración remota ni `vercel.json`; los overrides deben coincidir con esta tabla antes de un despliegue manual posterior.
-
-La producción debe permitir acceso público para compartir esta versión sin login. No se inspeccionó el estado actual de Deployment Protection del proyecto; esta tarea no cambia sus ajustes ni publica automáticamente. No se hacen commits ni push.
+No crear otro proyecto. El dashboard no se inspeccionó ni modificó; estos ajustes quedan documentados para su aplicación posterior. No se despliega automáticamente ni se ejecutan commits o push.
 
 ## Acceso e indexación
 
-**`/para/danna/` es pública y no tiene control de acceso.** Cualquiera que conozca o reciba el enlace puede leer y copiar la historia, sus props y los archivos del despliegue. Esta exposición es una decisión explícita del usuario para v1. No se afirma que el contenido esté protegido.
+**`/para/danna/` es pública y no tiene control de acceso.** Cualquiera que reciba o conozca el enlace puede leer y copiar HTML, props y recursos. Esta exposición está aceptada expresamente para v1.
 
-La dedicatoria emite `noindex, nofollow`: es una indicación de indexación para buscadores, no una medida de seguridad. No hay sitemap ni integración de sitemap; Danna no se incluye en ninguno. Si se introduce uno, excluir explícitamente esta ruta. Landing y Demo conservan sus metadatos y HTML sin referencias a Danna. No se añade un enlace a la dedicatoria desde esas páginas.
+La dedicatoria conserva `noindex, nofollow` como indicación de indexación, no como seguridad. No hay sitemap; si se incorpora uno, excluir esa ruta. Landing y Demo no mencionan a Danna en sus metadatos ni enlazan su historia. Se conserva el contenido aprobado, con `memories: []`, sin fotografías personales ni datos adicionales.
 
-Se conserva exactamente el contenido aprobado, con `memories: []`, sin fotos personales ni datos privados adicionales. Los recursos fotográficos de demo permanecen como muestra ficticia.
+## Verificación
 
-Los perfiles separados se conservan para posibles publicaciones futuras. `personal` también es un artefacto estático sin autenticación: una publicación futura que requiera privacidad necesitará control de acceso efectivo del hosting para HTML y recursos, antes de subir contenido. Cambiar de perfil o añadir noindex no proporciona esa protección. Los procedimientos anteriores de dos proyectos quedan como decisión histórica en ADR 012, fuera de esta versión.
+`npm run verify` ejecuta tipos, lint, formato, Vitest y un único `npm run build`. Los gates exigen las tres rutas exactas, recursos previstos, referencias locales existentes, chunks alcanzables, seis escenas SSR, hidratación y noindex de Danna. Rechazan laboratorio, fotografías en Danna, referencias personales en Landing/Demo y restos de salidas antiguas. El gate narrativo conserva sus comprobaciones de Demo, anclas y Landing.
 
-## QA y preview local
-
-```bash
-npm run verify
-npm run preview -- --host 127.0.0.1
-# Abrir /, /demo/ y /para/danna/ en el puerto indicado por Astro.
-```
-
-`npm run preview:public` y `npm run preview:personal` sirven las salidas separadas en loopback. `npm run dev` conserva las tres vistas y el laboratorio; no es hosting.
-
-Los gates exigen rutas exactas, recursos allowlisted, referencias locales existentes y chunks alcanzables; rechazan laboratorio, fotos en Danna y referencias personales en Landing/Demo. Conservan el aislamiento completo del perfil público y personal. El gate narrativo se ejecuta también sobre unified: seis escenas SSR de demo, anclas, landing, cierre y exclusión del laboratorio. Vitest cubre contratos, SSR, navegación, carta, ciclo de vida y GSAP; no sustituye un navegador.
-
-Resultados y bloqueos actuales: [QA unificado](qa/unified-deployment.md). La matriz visual RC1 sigue pendiente. En el preview unificado se debe exigir acceso a Danna, en lugar del 404 que exigía el perfil público histórico.
+Las pruebas automatizadas no sustituyen el navegador. La revisión visual, responsive, navegación/scroll, carta y GSAP en navegador conservan sus pendientes; véase [verificación](verification.md). La matriz [RC1](qa/rc1.md) es histórica: ahora debe probar las tres rutas sobre el mismo preview de `dist/`, con Danna accesible, sin esperar el antiguo 404.

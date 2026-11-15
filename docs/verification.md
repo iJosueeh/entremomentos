@@ -1,3 +1,23 @@
+# Build estándar — 2026-11-15
+
+Estado vigente: `npm run verify` aprobado (código 0), log `/tmp/entremomentos-standard-verify.log`. Astro check: 82 archivos, cero errores/warnings/hints; ESLint y Prettier aprobados; Vitest: 16 archivos y 170 pruebas; un único build en `dist/`, 27 archivos y exactamente las páginas `/`, `/demo/` y `/para/danna/`. Gates de rutas, recursos locales, SSR, anclas, noindex y exclusión del laboratorio aprobados. El build limpió las salidas anteriores; no quedan subdirectorios de perfiles.
+
+Se retiraron la selección por entorno, outDir/publicDir específicos, runner, comandos y ramas de gates de perfiles. `npm run build` compila y verifica `dist/`; `npm run preview` usa la salida estándar. Una autocomprobación del hook de configuración aprobó las mismas tres rutas para valores antiguos o desconocidos de BUILD_PROFILE y el laboratorio solo en dev, con outDir/publicDir sin definir.
+
+`git diff --exit-code` confirmó sin cambios Story V2, componentes/hooks/animaciones/estilos del Player, contenido de Danna, Landing, rutas existentes y lockfile. Se conservan noindex y acceso público sin autenticación. No se añadieron fotografías, dependencias ni datos privados. La documentación de Vercel usa ahora build `npm run build`, output `dist` y ninguna variable de perfil; [ADR 014](decisions/014-standard-build.md), [guía](deployment-profiles.md).
+
+No se ejecutó nueva validación visual: este cambio afecta compilación y enlaces del layout; la revisión de responsive, carta, navegación/scroll y GSAP en navegador sigue pendiente con los bloqueos registrados anteriormente. No se inspeccionó ni modificó Vercel, desplegó, creó otro proyecto, ejecutó commit o push.
+
+Los registros siguientes son históricos y no describen los comandos vigentes. Los perfiles y la obligación de dos proyectos están retirados para esta versión.
+
+# Despliegue unificado — 2026-11-15
+
+Estado vigente: `npm run verify` aprobado (código 0): Astro check sin diagnósticos, lint, formato, 165 pruebas y builds public/personal/unified con gates. Unified genera las tres rutas en 27 archivos. Danna es pública sin control de acceso por decisión explícita para v1, con noindex y sin fotos. No se creó otro proyecto ni se desplegó, hizo commit o push.
+
+QA visual y HTTP pendientes: Firefox falla antes de renderizar `about:blank` y preview termina antes de ready. No se aprueba responsive, scroll, hidratación ni GSAP en navegador. Evidencia y pasos: [QA unified](qa/unified-deployment.md); configuración del único proyecto existente: [despliegue](deployment-profiles.md), [ADR 013](decisions/013-unified-deployment.md).
+
+Los registros siguientes son históricos. La exigencia de dos proyectos y de protección previa de la historia se sustituye para esta versión por la aceptación expresa de acceso público descrita arriba; los perfiles aislados se conservan.
+
 # Perfiles público y personal — 2026-11-15
 
 `npm run verify` aprobado (código 0): Astro check, ESLint, Prettier, Vitest y ambos builds con gates. Registro local: `/tmp/entremomentos-profiles-verify.log`. El formato de la tabla de `qa/rc1.md` ya fallaba en Prettier; se normalizó sin cambiar su contenido para completar el gate global.

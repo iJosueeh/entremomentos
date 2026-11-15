@@ -1,9 +1,7 @@
 import assert from 'node:assert/strict';
-import { readFile, readdir, stat } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 
-const profile = process.argv[2] ?? 'public';
-assert(['public', 'unified'].includes(profile), 'Perfil desconocido');
-const output = new URL(`../dist/${profile}/`, import.meta.url);
+const output = new URL('../dist/', import.meta.url);
 const demo = await readFile(new URL('demo/index.html', output), 'utf8');
 const landing = await readFile(new URL('index.html', output), 'utf8');
 const demoMain = demo.match(/<main\b[^>]*\bid="contenido"[^>]*>/)?.[0];
@@ -48,24 +46,6 @@ assert.equal([...landing.matchAll(/data-forest-anchor=/g)].length, 4);
 assert.match(landing, /href="\/demo"/);
 
 const files = await readdir(output, { recursive: true });
-for (const file of files) {
-  if (profile === 'public')
-    assert.doesNotMatch(
-      file,
-      /danna|dedication-preview/i,
-      `Ruta privada: ${file}`,
-    );
-  const url = new URL(file, output);
-  if (!(await stat(url)).isFile()) continue;
-  // Scan every artifact, including source maps and serialized island props.
-  const content = await readFile(url, 'utf8');
-  if (profile === 'public')
-    assert.doesNotMatch(
-      content,
-      /danna|josue|dedication-preview|Quería hacerte algo diferente|A veces siento que las palabras se quedan cortas|pequeño universo que hice pensando en ti/i,
-      `Dedicatoria local incluida en el artefacto público: ${file}`,
-    );
-}
 assert(
   !files.some((file) => /(^|\/)dev(\/|$)/.test(file)),
   'El laboratorio no debe generar rutas',

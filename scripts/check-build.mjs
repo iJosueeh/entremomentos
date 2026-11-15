@@ -12,18 +12,12 @@ const publicAssets = [
   'images/demo-winter.webp',
 ];
 
-export async function checkProfileBuild(profile, directory) {
-  assert(
-    ['public', 'personal', 'unified'].includes(profile),
-    'Perfil desconocido',
-  );
-  const personal = profile === 'personal';
-  const expectedRoutes = personal
-    ? ['para/danna/index.html']
-    : profile === 'unified'
-      ? ['demo/index.html', 'index.html', 'para/danna/index.html']
-      : ['demo/index.html', 'index.html'];
-  const assets = personal ? ['favicon.svg'] : publicAssets;
+export async function checkBuild(directory) {
+  const expectedRoutes = [
+    'demo/index.html',
+    'index.html',
+    'para/danna/index.html',
+  ];
   const entries = await readdir(directory, {
     recursive: true,
     withFileTypes: true,
@@ -42,7 +36,7 @@ export async function checkProfileBuild(profile, directory) {
     files
       .filter((file) => !file.endsWith('.html') && !file.startsWith('_astro/'))
       .sort(),
-    [...assets].sort(),
+    [...publicAssets].sort(),
     'Recursos estáticos inesperados',
   );
   const contents = new Map();
@@ -58,16 +52,7 @@ export async function checkProfileBuild(profile, directory) {
       /Laboratorio GSAP|Desmontar demostración|create-demo-animation|\.memory-stage/,
       `Laboratorio incluido: ${file}`,
     );
-    if (personal) {
-      assert.doesNotMatch(
-        file + content,
-        /\bAlma\b|\bNico\b|data-universe-hero|data-forest-anchor|demo-forest|demo-closure/,
-        `Contenido público incluido: ${file}`,
-      );
-    } else if (
-      profile === 'public' ||
-      ['index.html', 'demo/index.html'].includes(file)
-    ) {
+    if (['index.html', 'demo/index.html'].includes(file)) {
       assert.doesNotMatch(
         file + content,
         /danna|josue|dedication-preview|Quería hacerte algo diferente|A veces siento que las palabras se quedan cortas|pequeño universo que hice pensando en ti/i,
@@ -96,7 +81,7 @@ export async function checkProfileBuild(profile, directory) {
       `Chunk sin referencia desde las rutas previstas: ${file}`,
     );
   }
-  if (profile !== 'public') {
+  {
     const html = contents.get('para/danna/index.html');
     assert.match(html, /Danna, qué bonito que existas/);
     assert.match(html, /Con mucho cariño, Josue/);
@@ -142,7 +127,7 @@ export async function checkProfileBuild(profile, directory) {
     }
   }
   console.log(
-    `Perfil ${profile}: rutas, contenido y recursos comprobados (${files.length} archivos).`,
+    `Build: rutas, contenido y recursos comprobados (${files.length} archivos).`,
   );
 }
 
@@ -150,5 +135,5 @@ if (
   process.argv[1] &&
   resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  await checkProfileBuild(process.argv[2], resolve(`dist/${process.argv[2]}`));
+  await checkBuild(resolve('dist'));
 }

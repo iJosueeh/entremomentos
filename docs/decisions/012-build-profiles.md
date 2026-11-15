@@ -1,5 +1,7 @@
 # ADR 012 — Builds público y personal aislados
 
+**Decisión histórica, sustituida por [ADR 014](014-standard-build.md): ya no existen perfiles ni salidas separadas.**
+
 Estado histórico: sustituido para v1 por [ADR 013](013-unified-deployment.md). Los perfiles separados se conservan; los dos proyectos y la prueba de protección ya no son requisito de la versión pública unificada.
 
 Estado original: implementado localmente; publicación personal bloqueada hasta verificar acceso en hosting. Actualiza la restricción de solo desarrollo de ADR 010; no cambia Story V2.

@@ -1,5 +1,7 @@
 # ADR 013 — Un despliegue con tres rutas
 
+**Decisión histórica, sustituida por [ADR 014](014-standard-build.md): ya no existen perfiles ni salidas separadas.**
+
 Estado: implementado localmente. Sustituye para v1 la decisión de dos proyectos de ADR 012 por petición explícita del usuario; mantiene sus perfiles separados para usos posteriores.
 
 El proyecto existente `entremomentos.vercel.app` servirá Landing, Demo y Danna en `/`, `/demo/` y `/para/danna/`. Se acepta expresamente que la dedicatoria sea pública por enlace directo, sin autenticación. No se desplegó ni se creó otro proyecto.

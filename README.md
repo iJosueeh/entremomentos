@@ -26,12 +26,12 @@ npm install
 npm run dev
 ```
 
-Abrir `http://localhost:4321`, `/demo` y, solo durante desarrollo, `/dev/gsap`. La dedicatoria local está en `/para/danna/`: ejecutar `npm run dev -- --host 127.0.0.1`. Esa ruta se incluye en el build unificado y es pública sin control de acceso por decisión explícita para v1; el perfil separado `public` la excluye. No se publica el servidor de desarrollo. Ver [verificación de privacidad y QA](docs/qa/danna-v1.md). Conservar el `package-lock.json` existente y usar `npm ci` para reproducirlo. La instalación limpia y los peers están verificados; conservar los pendientes de navegador y mantenimiento registrados en verification. No usar `--force` ni `--legacy-peer-deps` para ocultar incompatibilidades.
+Abrir `http://localhost:4321`, `/demo` y, solo durante desarrollo, `/dev/gsap`. La dedicatoria local está en `/para/danna/`: ejecutar `npm run dev -- --host 127.0.0.1`. Esa ruta se incluye en el build de producción y es pública sin control de acceso por decisión explícita para v1. No se publica el servidor de desarrollo. Ver [verificación de privacidad y QA](docs/qa/danna-v1.md). Conservar el `package-lock.json` existente y usar `npm ci` para reproducirlo. La instalación limpia y los peers están verificados; conservar los pendientes de navegador y mantenimiento registrados en verification. No usar `--force` ni `--legacy-peer-deps` para ocultar incompatibilidades.
 
 | Comando                | Función                                                                 |
 | ---------------------- | ----------------------------------------------------------------------- |
 | `npm run dev`          | Desarrollo Astro                                                        |
-| `npm run build`        | Generación estática unificada en dist/unified                           |
+| `npm run build`        | Generación estática de las tres rutas en dist/                          |
 | `npm run preview`      | Previsualización del build                                              |
 | `npm run check`        | Tipos y diagnósticos Astro                                              |
 | `npm run lint`         | ESLint en JS, TS, TSX y Astro                                           |
@@ -40,16 +40,16 @@ Abrir `http://localhost:4321`, `/demo` y, solo durante desarrollo, `/dev/gsap`. 
 | `npm test`             | Contratos, SSR y ciclo de vida con Vitest                               |
 | `npm run verify`       | Tipos, lint, formato, pruebas, build y comprobación del HTML/artefactos |
 
-## Perfiles de despliegue
+## Despliegue
 
-`npm run build` / `npm run build:unified` generan `/`, `/demo/` y `/para/danna/` en `dist/unified` para el único proyecto existente `entremomentos.vercel.app`. Danna es pública sin autenticación, con `noindex` como indicación de indexación; no hay sitemap ni fotografías personales. No se despliega automáticamente.
+`npm run build` genera `/`, `/demo/` y `/para/danna/` en `dist/` para el único proyecto existente `entremomentos.vercel.app`. Danna es pública sin autenticación, con `noindex` como indicación de indexación; no hay sitemap ni fotografías personales. No se despliega automáticamente.
 
-Se conservan `build:public` (solo Landing y Demo en `dist/public`) y `build:personal` (solo Danna en `dist/personal`). `npm run verify` comprueba los tres artefactos; ejecutar sin `BUILD_PROFILE` definido. `npm run preview` sirve unified; `preview:public` y `preview:personal` sirven las salidas separadas. Configuración exacta de Vercel: [guía de despliegue](docs/deployment-profiles.md), [ADR 013](docs/decisions/013-unified-deployment.md) y [QA actual](docs/qa/unified-deployment.md).
+No hay perfiles ni selección por variables de entorno. `npm run verify` comprueba un único build y `npm run preview` sirve `dist/`. Configuración exacta de Vercel: [guía de despliegue](docs/deployment-profiles.md), [ADR 014](docs/decisions/014-standard-build.md) y [verificación actual](docs/verification.md).
 
 ## Organización
 
 ```text
-src/routes/                        Entradas Astro seleccionadas por perfil
+src/routes/                        Entradas Astro de producción
 src/components/layout/             Documento y navegación comunes
 src/features/landing/              Universo Vivo: presentación, datos, hooks, animaciones y CSS
 src/features/story-player/

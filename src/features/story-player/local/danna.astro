@@ -10,11 +10,6 @@ import './preview.css';
   description="Una dedicatoria para ti."
   noindex
   fullWidthContent
-  publicSiteUrl={
-    import.meta.env.BUILD_PROFILE === 'personal'
-      ? 'https://entremomentos.vercel.app'
-      : undefined
-  }
 >
   <div class="dedication-preview">
     <StoryPlayer story={dannaStory} client:load />
